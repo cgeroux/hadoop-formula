@@ -4,11 +4,16 @@
 {% set gc = g.get('config', {}) %}
 
 {%- set versions = {} %}
-{%- set default_dist_id = 'spark-1.6.1-bin-hadoop2.6' %}
+{%- set default_dist_id = 'spark-2.3.3-bin-hadoop2.6' %}
 {%- set dist_id = g.get('version', p.get('version', default_dist_id)) %}
 
 # Several prebuilt versions for different versions of hadoop
-{%- set default_versions = { 'spark-1.6.1-bin-hadoop2.6' : { 'version'       : '1.6.1-bin-hadoop2.6',
+{%- set default_versions = { 'spark-2.3.3-bin-hadoop2.6' : { 'version'       : '2.3.3-bin-hadoop2.6',
+                                                             'version_name'  : 'spark-2.3.3-bin-hadoop2.6',
+                                                             'source_url'    : g.get('source_url', p.get('source_url', 'https://archive.apache.org/dist/spark/spark-2.3.3/spark-2.3.3-bin-hadoop2.6.tgz')),
+                                                             'major_version' : '1'
+                                                           },
+                            'spark-1.6.1-bin-hadoop2.6' : { 'version'       : '1.6.1-bin-hadoop2.6',
                                                              'version_name'  : 'spark-1.6.1-bin-hadoop2.6',
                                                              'source_url'    : g.get('source_url', p.get('source_url', 'http://d3kbcqa49mib13.cloudfront.net/spark-1.6.1-bin-hadoop2.6.tgz')),
                                                              'major_version' : '1'
@@ -97,7 +102,7 @@
                            }%}
 
 {%- set versions         = p.get('versions', default_versions) %}
-{%- set version_info     = versions.get(dist_id, versions['spark-1.6.1-bin-hadoop2.6']) %}
+{%- set version_info     = versions.get(dist_id, versions['spark-2.3.3-bin-hadoop2.6']) %}
 {%- set alt_home         = salt['pillar.get']('spark:prefix', '/usr/lib/spark') %}
 {%- set real_home        = '/usr/lib/' + version_info['version_name'] %}
 {%- set alt_config       = gc.get('directory', pc.get('directory', '/etc/spark/conf')) %}
